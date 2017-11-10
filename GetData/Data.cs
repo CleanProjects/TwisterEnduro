@@ -12,7 +12,7 @@ namespace GetData
         {
             XDocument doc = XDocument.Load("C:\\twister.gpx");
             XNamespace gpx = XNamespace.Get("http://www.topografix.com/GPX/1/1");
-
+//
             return doc.Descendants(gpx + "trkpt")
                     .Select(x => new Values(x.Attribute("lon").Value, x.Attribute("lat").Value, x.Element(gpx + "time").Value, x.Element(gpx + "ele").Value)).ToList();
         }
