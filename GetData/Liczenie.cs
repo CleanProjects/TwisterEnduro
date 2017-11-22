@@ -75,218 +75,113 @@ namespace GetData
         }
 
 
-        public double TotalDistance(List<Values>dane)
-        {
-            
-            double wynik = 0;
-
-            for (int i = 0; i < dane.Count - 1; i++)
-            {
-                var l1 = dane[i].lat;
-                double l1lon = Convert.ToDouble(dane[i].lon.Replace(".", ","));
-                double l1lat = Convert.ToDouble(dane[i].lat.Replace(".", ","));
-                double l2lon = Convert.ToDouble(dane[i + 1].lon.Replace(".", ","));
-                double l2lat = Convert.ToDouble(dane[i + 1].lat.Replace(".", ","));
-                double droga = 0;
-              
-                wynik += Havershine.HScalculate(l1lat, l1lon, l2lat, l2lon);
-                droga = Havershine.HScalculate(l1lat, l1lon, l2lat, l2lon);
+        public double TotalDistance(double l1ltat,double l1lot,double l2lat,double l2lon)
+        {   
+             
+           return    Havershine.HScalculate(l1ltat, l1lot, l2lat, l2lon);
                
-            }
-            wynik = Math.Round(wynik, 2);
-            return wynik;
+            
+         
         }
 
-        public double ClimbingDistance(List<Values> dane)
+        public double ClimbingDistance(double l1ltat, double l1lot, double l2lat, double l2lon,double e1, double e2)
         {
             double wynik = 0;
-            string jk4 = String.Empty;
-           
-            double e = 0;
-            double up = 0;
+   
           
-            for (int i = 0; i < dane.Count - 1; i++)
-            {
-                var l1 = dane[i].lat;
-                double l1lon = Convert.ToDouble(dane[i].lon.Replace(".", ","));
-                double l1lat = Convert.ToDouble(dane[i].lat.Replace(".", ","));
-                double l2lon = Convert.ToDouble(dane[i + 1].lon.Replace(".", ","));
-                double l2lat = Convert.ToDouble(dane[i + 1].lat.Replace(".", ","));
-                double e1 = Convert.ToDouble(dane[i].elevation.Replace(".", ","));
-                double e2 = Convert.ToDouble(dane[i + 1].elevation.Replace(".", ","));
-                double droga = 0;
+           
+             
 
                 
 
                 if (e1 < e2)
                 {
-                    wynik += Havershine.HScalculate(l1lat, l1lon, l2lat, l2lon);
+                    wynik = Havershine.HScalculate(l1ltat, l1lot, l2lat, l2lon);
 
                 }
               
 
-            }
-            wynik = Math.Round(wynik, 2);
+            
+        
             return wynik;
 
         }
 
-        public double DescentDistance(List<Values> dane)
+        public double DescentDistance(double l1ltat, double l1lot, double l2lat, double l2lon, double e1, double e2)
         {
             double wynik = 0;
-            string jk4 = String.Empty;
-
-            double e = 0;
-            double down = 0;
-
-            for (int i = 0; i < dane.Count - 1; i++)
-            {
-                var l1 = dane[i].lat;
-                double l1lon = Convert.ToDouble(dane[i].lon.Replace(".", ","));
-                double l1lat = Convert.ToDouble(dane[i].lat.Replace(".", ","));
-                double l2lon = Convert.ToDouble(dane[i + 1].lon.Replace(".", ","));
-                double l2lat = Convert.ToDouble(dane[i + 1].lat.Replace(".", ","));
-                double e1 = Convert.ToDouble(dane[i].elevation.Replace(".", ","));
-                double e2 = Convert.ToDouble(dane[i + 1].elevation.Replace(".", ","));
-                double droga = 0;
+           
+            
+              
 
 
 
                 if (e1 > e2)
                 {
-                    wynik += Havershine.HScalculate(l1lat, l1lon, l2lat, l2lon);
+                    wynik += Havershine.HScalculate(l1ltat, l1lot, l2lat, l2lon);
 
                 }
 
 
-            }
-            wynik = Math.Round(wynik, 2);
+        
+         
             return wynik;
         }
 
-        public double FlatDistance(List<Values> dane)
+        public double FlatDistance(double l1ltat, double l1lot, double l2lat, double l2lon, double e1, double e2)
         {
             double wynik = 0;
-            string jk4 = String.Empty;
-
-            double e = 0;
-            double down = 0;
-
-            for (int i = 0; i < dane.Count - 1; i++)
-            {
-                var l1 = dane[i].lat;
-                double l1lon = Convert.ToDouble(dane[i].lon.Replace(".", ","));
-                double l1lat = Convert.ToDouble(dane[i].lat.Replace(".", ","));
-                double l2lon = Convert.ToDouble(dane[i + 1].lon.Replace(".", ","));
-                double l2lat = Convert.ToDouble(dane[i + 1].lat.Replace(".", ","));
-                double e1 = Convert.ToDouble(dane[i].elevation.Replace(".", ","));
-                double e2 = Convert.ToDouble(dane[i + 1].elevation.Replace(".", ","));
-                double droga = 0;
+      
 
 
 
                 if (e1 == e2)
                 {
-                    wynik += Havershine.HScalculate(l1lat, l1lon, l2lat, l2lon);
+                    wynik += Havershine.HScalculate(l1ltat, l1lot, l2lat, l2lon);
 
                 }
 
 
-            }
-            wynik = Math.Round(wynik, 2);
+           
+          
             return wynik;
         }
 
-        public double MinimumSpeed(List<Values> dane)
+        public double Speed(double l1ltat,double l1lot,double l2lat,double l2lon,DateTime timeSpan,DateTime timeSpan1)
         {
-            string jk4 = String.Empty;
             double wynik = 0;
             
             TimeSpan d = TimeSpan.Zero;
             double speed = 0;
-            double min = 0;
-          
-            for (int i = 0; i < dane.Count - 1; i++)
-            {
-
-                double speedpop = speed;
-                var l1 = dane[i].lat;
-                double l1lon = Convert.ToDouble(dane[i].lon.Replace(".", ","));
-                double l1lat = Convert.ToDouble(dane[i].lat.Replace(".", ","));
-                double l2lon = Convert.ToDouble(dane[i + 1].lon.Replace(".", ","));
-                double l2lat = Convert.ToDouble(dane[i + 1].lat.Replace(".", ","));
-                
-                DateTime timeSpan = Convert.ToDateTime(dane[i].timeSpan);
-                DateTime timeSpan1 = Convert.ToDateTime(dane[i + 1].timeSpan);
-                TimeSpan t = timeSpan1 - timeSpan;
-                double droga = 0;
-                
-                wynik += Havershine.HScalculate(l1lat, l1lon, l2lat, l2lon);
-                droga = Havershine.HScalculate(l1lat, l1lon, l2lat, l2lon);
-
-                double p = (t.Hours + t.Minutes / 100.0 + t.Seconds / 10000.0) * (t > TimeSpan.Zero ? 1 : -1);
-
-                speed = droga / p;
-
-                if (speed != speedpop)
-
-                    if (speed < speedpop)
-                    {
-                        min = speed;
-                    }
+  
+        
+         
 
                
-            }
-
-            return speed;
-
-        }
-
-        public double MaximumSpeed(List<Values> dane)
-        {
-            string jk4 = String.Empty;
-            double wynik = 0;
-
-            TimeSpan d = TimeSpan.Zero;
-            double speed = 0;
-            double max = 0;
-
-            for (int i = 0; i < dane.Count - 1; i++)
-            {
-
-                double speedpop = speed;
-                var l1 = dane[i].lat;
-                double l1lon = Convert.ToDouble(dane[i].lon.Replace(".", ","));
-                double l1lat = Convert.ToDouble(dane[i].lat.Replace(".", ","));
-                double l2lon = Convert.ToDouble(dane[i + 1].lon.Replace(".", ","));
-                double l2lat = Convert.ToDouble(dane[i + 1].lat.Replace(".", ","));
-
-                DateTime timeSpan = Convert.ToDateTime(dane[i].timeSpan);
-                DateTime timeSpan1 = Convert.ToDateTime(dane[i + 1].timeSpan);
+               
+                
+              
                 TimeSpan t = timeSpan1 - timeSpan;
                 double droga = 0;
+                
+                wynik += Havershine.HScalculate(l1ltat, l1lot, l2lat, l2lon);
+                droga = Havershine.HScalculate(l1ltat, l1lot, l2lat, l2lon);
 
-                wynik += Havershine.HScalculate(l1lat, l1lon, l2lat, l2lon);
-                droga = Havershine.HScalculate(l1lat, l1lon, l2lat, l2lon);
-
-                double p = (t.Hours + t.Minutes / 100.0 + t.Seconds / 10000.0) * (t > TimeSpan.Zero ? 1 : -1);
-
+              double p = (t.Hours + t.Minutes / 100.0 + t.Seconds / 10000.0) * (t > TimeSpan.Zero ? 1 : -1);
+            //double p = Convert.ToDouble(t);
                 speed = droga / p;
 
-                if (speed != speedpop)
-
-                    if (speed > speedpop)
-                    {
-                        max = speed;
-                    }
+               
 
 
-            }
-
+               
+            
 
             return speed;
 
         }
+
+       
 
         public double AverageSpeed(List<Values> dane)
         {
@@ -327,59 +222,7 @@ namespace GetData
             return averagespeed;
         }
 
-        public double AverageClimbingSpeed(List<Values> dane)
-        {
-            double wynik = 0;
-            string jk4 = String.Empty;
-            TimeSpan d = TimeSpan.Zero;
-            double e = 0;
-            double speed = 0; 
-            double up = 0;
-            double averagehelper = 0;
-            double averagespeed = 0; 
-
-            for (int i = 0; i < dane.Count - 1; i++)
-            {
-                var l1 = dane[i].lat;
-                double l1lon = Convert.ToDouble(dane[i].lon.Replace(".", ","));
-                double l1lat = Convert.ToDouble(dane[i].lat.Replace(".", ","));
-                double l2lon = Convert.ToDouble(dane[i + 1].lon.Replace(".", ","));
-                double l2lat = Convert.ToDouble(dane[i + 1].lat.Replace(".", ","));
-                double e1 = Convert.ToDouble(dane[i].elevation.Replace(".", ","));
-                double e2 = Convert.ToDouble(dane[i + 1].elevation.Replace(".", ","));
-
-                DateTime timeSpan = Convert.ToDateTime(dane[i].timeSpan);
-                DateTime timeSpan1 = Convert.ToDateTime(dane[i + 1].timeSpan);
-                TimeSpan t = timeSpan1 - timeSpan;
-
-                double droga = 0;
-
-                if (e1 < e2)
-                {
-                    wynik += Havershine.HScalculate(l1lat, l1lon, l2lat, l2lon);
-
-                }
-                else
-                {
-                    averagehelper = dane.Count - 1;
-                }
-
-                double p = (t.Hours + t.Minutes / 100.0 + t.Seconds / 10000.0) * (t > TimeSpan.Zero ? 1 : -1);
-
-                speed = wynik/ p;
-                averagespeed = averagehelper;
-
-
-                
-
-             
-
-
-            }
-            wynik = Math.Round(wynik, 2);
-            return averagespeed;
-        }
-
+       
         public double AverageDescentSpeed(List<Values> dane)
         {
             return 0;

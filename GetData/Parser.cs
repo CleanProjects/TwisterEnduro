@@ -24,21 +24,62 @@ namespace GetData
             List<string> listlon = new List<string>();
             List<string> listlat = new List<string>();
             Liczenie l = new Liczenie();
-            
+            double wynik = 0;
+            double climb = 0;
+            double descent = 0;
+            double flat = 0;
+            double minspeed = 0;
+            double maxspeed = 0;
+            double avarangespeed = 0;
+            double av = 0;
+            double avc = 0;
+            int licznik = 0;
+            double srclim = 0;
             if (dane != null)
             {
 
+                for (int i = 0; i < dane.Count - 1; i++)
+                {
+                    var l1 = dane[i].lat;
+                    double l1lon = Convert.ToDouble(dane[i].lon.Replace(".", ","));
+                    double l1lat = Convert.ToDouble(dane[i].lat.Replace(".", ","));
+                    double l2lon = Convert.ToDouble(dane[i + 1].lon.Replace(".", ","));
+                    double l2lat = Convert.ToDouble(dane[i + 1].lat.Replace(".", ","));
+                    double e1 = Convert.ToDouble(dane[i].elevation.Replace(".", ","));
+                    double e2 = Convert.ToDouble(dane[i + 1].elevation.Replace(".", ","));
+                    DateTime timeSpan = Convert.ToDateTime(dane[i].timeSpan);
+                    DateTime timeSpan1 = Convert.ToDateTime(dane[i + 1].timeSpan);
+                    wynik += l.TotalDistance(l1lat, l1lon, l2lat, l2lon);
+                    climb += l.ClimbingDistance(l1lat, l1lon, l2lat, l2lon, e1, e2);
+                    descent += l.DescentDistance(l1lat, l1lon, l2lat, l2lon, e1, e2);
+                    flat += l.FlatDistance(l1lat, l1lon, l2lat, l2lon, e1, e2);
 
+                    if (minspeed == 0 || minspeed > l.Speed(l1lat, l1lon, l2lat, l2lon, timeSpan, timeSpan1))
+                        minspeed = l.Speed(l1lat, l1lon, l2lat, l2lon, timeSpan, timeSpan1);
+                    if (minspeed == 0 || minspeed < l.Speed(l1lat, l1lon, l2lat, l2lon, timeSpan, timeSpan1))
+                        maxspeed = l.Speed(l1lat, l1lon, l2lat, l2lon, timeSpan, timeSpan1);
 
+                    av += l.Speed(l1lat, l1lon, l2lat, l2lon, timeSpan, timeSpan1);
 
-           Console.WriteLine(     l.TotalDistance(dane));
-                Console.WriteLine(l.ClimbingDistance(dane));
-                Console.WriteLine(l.DescentDistance(dane));
-                Console.WriteLine(l.FlatDistance(dane));
-                Console.WriteLine(l.MinimumSpeed(dane));
-                Console.WriteLine(l.MaximumSpeed(dane));
-                Console.WriteLine(l.AverageSpeed(dane));
-                Console.WriteLine(l.AverageClimbingSpeed(dane));
+                    if (e1<e2)
+                    {
+                        licznik++;
+                        avc += l.Speed(l1lat, l1lon, l2lat, l2lon, timeSpan, timeSpan1);
+                    }
+                }
+                avarangespeed = av / dane.Count-1 ;
+                srclim = avc / licznik;
+
+                    Console.WriteLine("Długość trasy:"+(Math.Round( wynik,2)).ToString());
+                Console.WriteLine("Długość podjazdu pod góre:"+Math.Round( climb,2).ToString());
+                Console.WriteLine("Długość zjazdu:"+Math.Round(descent,2).ToString());
+                Console.WriteLine("Długość równi:"+Math.Round(flat,2).ToString());
+                Console.WriteLine("Minimalna prędkośc:"+Math.Round(minspeed,5).ToString());
+                Console.WriteLine("Maksymalna prędkość:"+Math.Round(maxspeed,2).ToString());
+                Console.WriteLine("Średnia prędkość:"+Math.Round(avarangespeed,2).ToString());
+
+                
+                Console.WriteLine("Średnia prędkość wjazdu: "+Math.Round(srclim,2).ToString());
 
 
 
@@ -49,24 +90,6 @@ namespace GetData
             
         }
 
-        public void Liczenie2()
-        {
-            var dane = data.PobierzDane();
-
-            var tmp = dane;
-
-            List<Data> listalat = new List<Data>();
-          
-
-            if (dane != null)
-
-                foreach (var x in listalat)
-                {
-
-                    
-
-                }
-            
-        }
+      
     }
 }
