@@ -56,7 +56,7 @@ namespace GetData
 
                     if (minspeed == 0 || minspeed > l.Speed(l1lat, l1lon, l2lat, l2lon, timeSpan, timeSpan1))
                         minspeed = l.Speed(l1lat, l1lon, l2lat, l2lon, timeSpan, timeSpan1);
-                    if (minspeed == 0 || minspeed < l.Speed(l1lat, l1lon, l2lat, l2lon, timeSpan, timeSpan1))
+                    if (maxspeed == 0 || maxspeed < l.Speed(l1lat, l1lon, l2lat, l2lon, timeSpan, timeSpan1))
                         maxspeed = l.Speed(l1lat, l1lon, l2lat, l2lon, timeSpan, timeSpan1);
 
                     av += l.Speed(l1lat, l1lon, l2lat, l2lon, timeSpan, timeSpan1);
@@ -67,7 +67,7 @@ namespace GetData
                         avc += l.Speed(l1lat, l1lon, l2lat, l2lon, timeSpan, timeSpan1);
                     }
                 }
-                avarangespeed = av / dane.Count-1 ;
+                avarangespeed = av / dane.Count-2 ;
                 srclim = avc / licznik;
 
                     Console.WriteLine("Długość trasy:"+(Math.Round( wynik,2)).ToString());

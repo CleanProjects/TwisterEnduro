@@ -155,11 +155,6 @@ namespace GetData
             double speed = 0;
   
         
-         
-
-               
-               
-                
               
                 TimeSpan t = timeSpan1 - timeSpan;
                 double droga = 0;
@@ -170,12 +165,6 @@ namespace GetData
               double p = (t.Hours + t.Minutes / 100.0 + t.Seconds / 10000.0) * (t > TimeSpan.Zero ? 1 : -1);
             //double p = Convert.ToDouble(t);
                 speed = droga / p;
-
-               
-
-
-               
-            
 
             return speed;
 
