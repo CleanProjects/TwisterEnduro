@@ -104,26 +104,10 @@ namespace GetData
             return speed;
 
         }
+        
 
-        public void MinimumElevation()
-        {
-            //najmniejszy element ELE
-        }
-
-        public void MaximumElevation()
-        {
-            //maksymalnyElement ELE
-        }
-
-        public void AverageElevation()
-        {
-            //Wszystkie punkty ELE/ilosc
-        }
-
-        public void TotalTrackTime()
-        {
-            //zsumowany Czas
-        }
+       
+     
 
         public void TotalDescent()
         {

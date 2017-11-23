@@ -41,6 +41,10 @@ namespace GetData
             double avf = 0;
             int licznik2 = 0;
             double srflat = 0;
+            double wys = 0;
+            double maxwys = 0;
+            double sumael = 0;
+            double srwys = 0;
             if (dane != null)
             {
 
@@ -82,11 +86,22 @@ namespace GetData
                         licznik2++;
                         avf+= l.Speed(l1lat, l1lon, l2lat, l2lon, timeSpan, timeSpan1);
                     }
+                    if (wys==0||e1<wys)
+                wys = e1;
+                    if (maxwys == 0 || e1 > maxwys)
+                        maxwys = e1;
+                    sumael += e1;
+
                 }
+
+                srwys = sumael / dane.Count - 1;
                 avarangespeed = av / dane.Count-2 ;
                 srclim = avc / licznik;
                 drdescent = avd / licznik1;
                 srflat = avf / licznik2;
+               DateTime p1 = Convert.ToDateTime(dane.Last().timeSpan);
+                DateTime p2 = Convert.ToDateTime(dane.First().timeSpan);
+             
                 Console.WriteLine("Długość trasy:"+(Math.Round( wynik,2)).ToString());
                 Console.WriteLine("Długość podjazdu pod góre:"+Math.Round( climb,2).ToString());
                 Console.WriteLine("Długość zjazdu:"+Math.Round(descent,2).ToString());
@@ -96,9 +111,11 @@ namespace GetData
                 Console.WriteLine("Średnia prędkość:"+Math.Round(avarangespeed,2).ToString());
                 Console.WriteLine("Średnia prędkość wjazdu: "+Math.Round(srclim,2).ToString());
                 Console.WriteLine("Średnia prędkość zjazdu: " + Math.Round(drdescent, 2).ToString());
-                Console.WriteLine("Średnia prędkość po równym: " + Math.Round(srflat, 2).ToString());
-
-
+                Console.WriteLine("Średnia prędkość porównym: " + Math.Round(srflat, 2).ToString());
+                Console.WriteLine("Najniższa wysokość:" + wys);
+                Console.WriteLine("Najwyższa wysokośc: " + maxwys);
+                Console.WriteLine("Średnia wysokość: " + Math.Round(srwys,2));
+                Console.WriteLine("Czas trasy:" +  Convert.ToString(p1-p2   ));
 
             }
 
