@@ -34,7 +34,13 @@ namespace GetData
             double av = 0;
             double avc = 0;
             int licznik = 0;
+            int licznik1 = 0;
             double srclim = 0;
+            double avd = 0;
+            double drdescent = 0;
+            double avf = 0;
+            int licznik2 = 0;
+            double srflat = 0;
             if (dane != null)
             {
 
@@ -66,22 +72,31 @@ namespace GetData
                         licznik++;
                         avc += l.Speed(l1lat, l1lon, l2lat, l2lon, timeSpan, timeSpan1);
                     }
+                    if (e1>e2)
+                    {
+                        licznik1++;
+                        avd += l.Speed(l1lat, l1lon, l2lat, l2lon, timeSpan, timeSpan1);
+                    }
+                    if (e1==e2)
+                    {
+                        licznik2++;
+                        avf+= l.Speed(l1lat, l1lon, l2lat, l2lon, timeSpan, timeSpan1);
+                    }
                 }
                 avarangespeed = av / dane.Count-2 ;
                 srclim = avc / licznik;
-
-                    Console.WriteLine("Długość trasy:"+(Math.Round( wynik,2)).ToString());
+                drdescent = avd / licznik1;
+                srflat = avf / licznik2;
+                Console.WriteLine("Długość trasy:"+(Math.Round( wynik,2)).ToString());
                 Console.WriteLine("Długość podjazdu pod góre:"+Math.Round( climb,2).ToString());
                 Console.WriteLine("Długość zjazdu:"+Math.Round(descent,2).ToString());
                 Console.WriteLine("Długość równi:"+Math.Round(flat,2).ToString());
                 Console.WriteLine("Minimalna prędkośc:"+Math.Round(minspeed,5).ToString());
                 Console.WriteLine("Maksymalna prędkość:"+Math.Round(maxspeed,2).ToString());
                 Console.WriteLine("Średnia prędkość:"+Math.Round(avarangespeed,2).ToString());
-
-                
                 Console.WriteLine("Średnia prędkość wjazdu: "+Math.Round(srclim,2).ToString());
-
-
+                Console.WriteLine("Średnia prędkość zjazdu: " + Math.Round(drdescent, 2).ToString());
+                Console.WriteLine("Średnia prędkość po równym: " + Math.Round(srflat, 2).ToString());
 
 
 
