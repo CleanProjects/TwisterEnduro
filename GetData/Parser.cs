@@ -24,6 +24,9 @@ namespace GetData
             List<string> listlon = new List<string>();
             List<string> listlat = new List<string>();
             Liczenie l = new Liczenie();
+            TimeSpan czasclimb = TimeSpan.Zero;
+            TimeSpan czasdescent = TimeSpan.Zero;
+            TimeSpan czasdesflat = TimeSpan.Zero;
             double wynik = 0;
             double climb = 0;
             double descent = 0;
@@ -45,9 +48,10 @@ namespace GetData
             double maxwys = 0;
             double sumael = 0;
             double srwys = 0;
+            int descentcount = 0;
             if (dane != null)
             {
-
+                
                 for (int i = 0; i < dane.Count - 1; i++)
                 {
                     var l1 = dane[i].lat;
@@ -60,8 +64,10 @@ namespace GetData
                     DateTime timeSpan = Convert.ToDateTime(dane[i].timeSpan);
                     DateTime timeSpan1 = Convert.ToDateTime(dane[i + 1].timeSpan);
                     wynik += l.TotalDistance(l1lat, l1lon, l2lat, l2lon);
-                    climb += l.ClimbingDistance(l1lat, l1lon, l2lat, l2lon, e1, e2);
+                    if (l.DescentDistance(l1lat, l1lon, l2lat, l2lon, e1, e2) != 0)
+                        descentcount++;
                     descent += l.DescentDistance(l1lat, l1lon, l2lat, l2lon, e1, e2);
+                    climb += l.ClimbingDistance(l1lat, l1lon, l2lat, l2lon, e1, e2);
                     flat += l.FlatDistance(l1lat, l1lon, l2lat, l2lon, e1, e2);
 
                     if (minspeed == 0 || minspeed > l.Speed(l1lat, l1lon, l2lat, l2lon, timeSpan, timeSpan1))
@@ -86,14 +92,21 @@ namespace GetData
                         licznik2++;
                         avf+= l.Speed(l1lat, l1lon, l2lat, l2lon, timeSpan, timeSpan1);
                     }
+                    /// wrzucic do petli
                     if (wys==0||e1<wys)
                 wys = e1;
                     if (maxwys == 0 || e1 > maxwys)
                         maxwys = e1;
                     sumael += e1;
 
+                    /// wrzucic do petli 
+                    czasclimb += l.ClimbingTime(e1, e2, timeSpan, timeSpan1);
+                    czasdescent += l.DescentTime(e1, e2, timeSpan, timeSpan1);
+                    czasdesflat += l.FlatTime(e1, e2, timeSpan, timeSpan1);
                 }
-
+                double percentflat =l.FinalBalanceFLat (wynik, flat);
+              double percentdescent=  l.FinalBalance(wynik, descent);
+                double percentclimbing = l.FinalBalance(wynik, climb);
                 srwys = sumael / dane.Count - 1;
                 avarangespeed = av / dane.Count-2 ;
                 srclim = avc / licznik;
@@ -115,8 +128,12 @@ namespace GetData
                 Console.WriteLine("Najniższa wysokość:" + wys);
                 Console.WriteLine("Najwyższa wysokośc: " + maxwys);
                 Console.WriteLine("Średnia wysokość: " + Math.Round(srwys,2));
-                Console.WriteLine("Czas trasy:" +  Convert.ToString(p1-p2   ));
-
+                Console.WriteLine("Czas trasy:" +  Convert.ToString(p1-p2));
+                Console.WriteLine("Ilość spadków: " + descentcount);
+                Console.WriteLine("Procent spadów do dl: " + Math.Round(percentdescent, 2) + "%"+ "Procent równin do dl: " + Math.Round(percentflat, 2) + "%"+ "Procent wzniesień do dl:" + Math.Round(percentclimbing, 2) + "%");
+                Console.WriteLine("Czas na wzniesieniach: " + czasclimb);
+                Console.WriteLine("Czas na zjazdach: " + czasdescent);
+                Console.WriteLine("Czas na równym: " + czasdesflat);
             }
 
             

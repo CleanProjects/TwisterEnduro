@@ -23,12 +23,6 @@ namespace GetData
         {
             double wynik = 0;
    
-          
-           
-             
-
-                
-
                 if (e1 < e2)
                 {
                     wynik = Havershine.HScalculate(l1ltat, l1lot, l2lat, l2lon);
@@ -36,20 +30,15 @@ namespace GetData
                 }
               
 
-            
-        
             return wynik;
 
         }
 
         public double DescentDistance(double l1ltat, double l1lot, double l2lat, double l2lon, double e1, double e2)
         {
-            double wynik = 0;
-           
             
-              
-
-
+            double wynik = 0;
+          
 
                 if (e1 > e2)
                 {
@@ -57,8 +46,6 @@ namespace GetData
 
                 }
 
-
-        
          
             return wynik;
         }
@@ -66,19 +53,11 @@ namespace GetData
         public double FlatDistance(double l1ltat, double l1lot, double l2lat, double l2lon, double e1, double e2)
         {
             double wynik = 0;
-      
-
-
-
                 if (e1 == e2)
                 {
                     wynik += Havershine.HScalculate(l1ltat, l1lot, l2lat, l2lon);
 
                 }
-
-
-           
-          
             return wynik;
         }
 
@@ -88,8 +67,6 @@ namespace GetData
 
             TimeSpan d = TimeSpan.Zero;
             double speed = 0;
-
-
 
             TimeSpan t = timeSpan1 - timeSpan;
             double droga = 0;
@@ -104,34 +81,67 @@ namespace GetData
             return speed;
 
         }
-        
+      
 
-       
-     
-
-        public void TotalDescent()
+        public double FinalBalance(double totaldistacne,double distancedescend)
         {
-            //wszystkie spadki
+
+
+            return (distancedescend / totaldistacne) * 100;
+;        }
+        public double FinalBalanceFLat(double totaldistacne, double distanceflat)
+        {
+
+
+            return (distanceflat / totaldistacne) * 100;
+  ;
         }
 
-        public void FinalBalance()
-        {
-            //stosunek spadkow do wzrostow
+        public double FinalBalanceClimb(double totaldistacne, double distanceclimb)
+            {
+
+            return (distanceclimb / totaldistacne) * 100; 
+
         }
 
-        public void ClimbingTime()
+        public TimeSpan ClimbingTime(double e1,double e2,DateTime t1,DateTime t2)
         {
-            //czas na wzniesieniach
+           TimeSpan wynik = TimeSpan.Zero;
+
+            if (e1 < e2)
+            {
+                wynik = t2 - t1;
+            }
+
+
+            return wynik;
         }
 
-        public void DescentTime()
+        public TimeSpan DescentTime(double e1, double e2, DateTime t1, DateTime t2)
         {
-            //czas na spadkach
+             TimeSpan wynik = TimeSpan.Zero;
+
+            if (e1 > e2)
+            {
+                wynik = t2 - t1;
+            }
+
+
+            return wynik;
         }
 
-        public void FlatTime()
+        public TimeSpan FlatTime(double e1, double e2, DateTime t1, DateTime t2)
         {
-            //czas na plaskim 
+
+            TimeSpan wynik = TimeSpan.Zero;
+
+            if (e1 ==e2)
+            {
+                wynik = t2 - t1;
+            }
+
+
+            return wynik;
         }
 
     }
