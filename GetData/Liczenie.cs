@@ -143,6 +143,7 @@ namespace GetData
 
             return wynik;
         }
+        //
 
     }
 }
